@@ -28,7 +28,7 @@ pytest -v .
 
 The module can be used to generate Huffman trees:
 
-```
+```Python
 from __future__ import print_function
 import pyhuffman.pyhuffman as pyhuffman
 
@@ -49,7 +49,7 @@ print(huffman_tree.bitarray_dict)
 
 Those trees can then be used to decode / encode data. Reading and writing to binary files is also supported.
 
-```
+```Python
 import pyhuffman.pyhuffman as pyhuffman
 
 freq = [
