@@ -1,6 +1,6 @@
 # pyhuffman
 
-This is a pure Python implementation of Huffman tree, based on the answer provided here (I was not the author of the post): 
+This is a pure Python implementation of Huffman tree, based on the answer provided here (I was not the author of neither the post nor the answer): 
 
 https://stackoverflow.com/questions/11587044/how-can-i-create-a-tree-for-huffman-encoding-and-decoding
 
