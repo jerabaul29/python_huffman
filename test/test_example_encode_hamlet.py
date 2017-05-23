@@ -1,5 +1,5 @@
 from __future__ import print_function
-import pyhuffman
+import pyhuffman.pyhuffman as pyhuffman
 import os
 
 path_to_here = os.path.dirname(os.path.realpath(__file__)) + '/'

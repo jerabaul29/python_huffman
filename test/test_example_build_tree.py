@@ -1,6 +1,6 @@
 from __future__ import print_function
 from bitarray import bitarray
-import pyhuffman
+import pyhuffman.pyhuffman as pyhuffman
 
 
 def test_valid_dicts():
