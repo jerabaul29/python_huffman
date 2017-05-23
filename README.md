@@ -84,4 +84,4 @@ decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_file
 print(decoded)
 ```
 
-For more detailed examples of how to use the module, look at the tests (test/test_example_build_tree.py and test/test_example_encode_hamlet.py). In particular, you will find a few helper functions to build the frequency list adapted to any output file in test/test_example_encode_hamlet.py .
+For more detailed examples of how to use the module, look at the tests (**test/test_example_build_tree.py** and **test/test_example_encode_hamlet.py**). In particular, you will find a few helper functions to build the frequency list adapted to any input file in **test/test_example_encode_hamlet.py** .
