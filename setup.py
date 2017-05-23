@@ -16,7 +16,7 @@ setup(
     #long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/jerabaul29/python_printind',
+    url='https://github.com/jerabaul29/python_huffman',
 
     # Author details
     author='jerabaul29',
