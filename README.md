@@ -1,4 +1,4 @@
-# pyhhuffman
+# pyhuffman
 
 This is a pure Python implementation of Huffman tree, based on the answer provided here: 
 
