@@ -67,13 +67,43 @@ def test_good_encoding_decoding():
     list_frequencies = generate_frequency_data(data_hamlet)
 
     # build the tree and encode ----
-    huffman_tree = pyhuffman.HuffmanTree(frequency_data=list_frequencies, path_to_save=path_to_list_frequencies)
+    huffman_tree = pyhuffman.HuffmanTree(frequency_data=list_frequencies, path_to_tree=path_to_list_frequencies)
     huffman_tree.encode_as_bitarray(data_hamlet, path_to_save=binary_hamlet_file)
 
     # build a new tree to decode (just to show how to restaure from saved data) ----
-    huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_save=path_to_list_frequencies)
+    huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
     decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file)
 
     assert len(decoded) == 173940
     assert decoded[0: 10] == 'HAMLET, PR'
     assert decoded[-10:] == 'hot off.]\n'
+
+
+def test_automatic_exhaustive_1():
+    # various pathes ----
+    # note: the raw text data for Hamlet comes from: https://www.gutenberg.org/cache/epub/1524/pg1524.txt
+    path_to_hamlet = path_to_here + 'hamlet_from_gutember_project.txt'
+    # where to save the list_frequencies to be able to re-build the same huffman tree
+    path_to_list_frequencies = path_to_here + 'data_huffman_tree.pkl'
+    # where to save the encoded output
+    binary_hamlet_file = path_to_here + 'hamlet_huffman.bin'
+
+    # generate list_frequencies ----
+    with open(path_to_hamlet) as crrt_file:
+        data_hamlet = crrt_file.read()
+
+    list_frequencies = generate_frequency_data(data_hamlet)
+
+    for stop in range(200, 230, 1):
+
+        reduced_data = data_hamlet[100: stop]
+
+        # build the tree and encode ----
+        huffman_tree = pyhuffman.HuffmanTree(frequency_data=list_frequencies, path_to_tree=path_to_list_frequencies)
+        huffman_tree.encode_as_bitarray(reduced_data, path_to_save=binary_hamlet_file)
+
+        # build a new tree to decode (just to show how to restaure from saved data) ----
+        huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
+        decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file)
+
+        assert(decoded == reduced_data)
