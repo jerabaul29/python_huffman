@@ -18,6 +18,11 @@ The module can then be installed from pip:
 pip install pyhuffman
 ```
 
+## Releases
+
+1.1: correcting trailing zeros bugs
+1.0: initial release
+
 ## Tests and examples
 
 Tests can be run from the repository root running:
