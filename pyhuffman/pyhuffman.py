@@ -56,6 +56,26 @@ def walk_tree(node, prefix="", code={}):
     return(code)
 
 
+def convert_intvalue_to_bitarray(int_value, number_of_bits):
+    """Convert an int_value to a bitarray. The number of bits in the resulting
+    bitarray is number_of_bits."""
+
+    binary_string = bin(int_value)[2:]
+    number_zeros_to_add = number_of_bits - len(binary_string)
+    result_string = number_zeros_to_add * '0' + binary_string
+
+    return(bitarray(result_string))
+
+
+def convert_bitarray_to_intvalue(bitarray_in):
+    """Convert bitarray_in into the corresponding integer value"""
+
+    bitarray_as_string = bitarray_in.to01()
+    int_value = int(bitarray_as_string, 2)
+
+    return(int_value)
+
+
 class HuffmanNode(object):
     """Class used for building the Huffman tree. Binary tree with one left and
     one right leaf.
@@ -72,7 +92,7 @@ class HuffmanTree(object):
     """Class for building, and extracting the information from the Huffman tree
     associated with user input"""
 
-    def __init__(self, frequency_data=None, path_to_tree=None):
+    def __init__(self, frequency_data=None, path_to_tree=None, debug=False):
         """Initialyze the Huffman tree and builds all internal variables.
 
         If frequency_data is None and path_to_tree is not None, load everything
@@ -88,6 +108,8 @@ class HuffmanTree(object):
         # note: in the case when path_to_tree is used, only the huffman_dict is
         # actually saved. This means frequency_data and tree are lost. But this
         # is enough to perform encryption and decryption.
+
+        self.debug = debug
 
         if frequency_data is not None:
             self.frequency_data = frequency_data
@@ -163,14 +185,20 @@ class HuffmanTree(object):
         size_bitarray = encoded.length()
         number_over_bits = size_bitarray % 8
         number_trailing_zeros = (8 - number_over_bits) % 8
-        
+
+        if self.debug:
+            print("number_trailing_zeros: " + str(number_trailing_zeros))
+
+        bitarray_trailing_zeros = convert_intvalue_to_bitarray(number_trailing_zeros, 8)
+
+        bitarray_total = bitarray_trailing_zeros + encoded
 
         if path_to_save is not None:
             with open(path_to_save, 'wb') as fh:
-                encoded.tofile(fh)
+                bitarray_total.tofile(fh)
 
         else:
-            return encoded
+            return bitarray_total
 
     def decode_from_bitarray(self, to_decode=None, path_to_decode=None):
         """Decode to_decode using the Huffman tree. Use either to_decode
@@ -191,6 +219,12 @@ class HuffmanTree(object):
             with open(path_to_decode, 'rb') as fh:
                 to_decode.fromfile(fh)
 
-        dec = bitarray(to_decode).decode(self.bitarray_dict)
+        # get the number of trailing zeros
+        number_trailing_zeros = convert_bitarray_to_intvalue(to_decode[0: 8])
+
+        if self.debug:
+            print("number_trailing_zeros: " + str(number_trailing_zeros))
+
+        dec = bitarray(to_decode[8: -number_trailing_zeros]).decode(self.bitarray_dict)
 
         return(''.join(dec))
