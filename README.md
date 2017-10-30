@@ -20,8 +20,8 @@ pip install pyhuffman
 
 ## Releases
 
-1.1: correcting trailing zeros bugs
-1.0: initial release
+- 1.1: correcting trailing zeros bugs
+- 1.0: initial release
 
 ## Tests and examples
 
