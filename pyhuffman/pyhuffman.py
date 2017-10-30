@@ -72,20 +72,20 @@ class HuffmanTree(object):
     """Class for building, and extracting the information from the Huffman tree
     associated with user input"""
 
-    def __init__(self, frequency_data=None, path_to_save=None):
+    def __init__(self, frequency_data=None, path_to_tree=None):
         """Initialyze the Huffman tree and builds all internal variables.
 
-        If frequency_data is None and path_to_save is not None, load everything
-        from path_to_save.
+        If frequency_data is None and path_to_tree is not None, load everything
+        from path_to_tree.
 
-        If frequency_data is not None, load it and if path_to_save is not None,
-        save everything for later use in path_to_save.
+        If frequency_data is not None, load it and if path_to_tree is not None,
+        save everything for later use in path_to_tree.
 
         frequency_data must be a list [(frequency, symbol)] or a pickled such
         list.
         """
 
-        # note: in the case when path_to_save is used, only the huffman_dict is
+        # note: in the case when path_to_tree is used, only the huffman_dict is
         # actually saved. This means frequency_data and tree are lost. But this
         # is enough to perform encryption and decryption.
 
@@ -98,7 +98,7 @@ class HuffmanTree(object):
             self.build_reverse_dictionary()
             self.generate_bitarray_dict()
 
-            if path_to_save is not None:  # save all internal data
+            if path_to_tree is not None:  # save all internal data
 
                 dict_all_information = {}
 
@@ -108,12 +108,12 @@ class HuffmanTree(object):
                 # dict_all_information['huffman_reverse_dict'] = self.huffman_reverse_dict
                 # dict_all_information['bitarray_dict'] = self.bitarray_dict
 
-                with open(path_to_save, 'wb') as f:
+                with open(path_to_tree, 'wb') as f:
                     pickle.dump(dict_all_information, f, pickle.HIGHEST_PROTOCOL)
 
-        elif path_to_save is not None:
+        elif path_to_tree is not None:
 
-            with open(path_to_save, 'rb') as f:  # load all internal data
+            with open(path_to_tree, 'rb') as f:  # load all internal data
                 dict_all_information = pickle.load(f)
 
             # self.frequency_data = dict_all_information['frequency_data']
@@ -125,7 +125,7 @@ class HuffmanTree(object):
             self.generate_bitarray_dict()
 
         else:
-            raise ValueError("You must give either frequency_data or path_to_save!")
+            raise ValueError("You must give either frequency_data or path_to_tree!")
 
     def build_tree(self):
         """Build the Huffman tree.
@@ -158,6 +158,12 @@ class HuffmanTree(object):
         """
         encoded = bitarray()
         encoded.encode(self.bitarray_dict, to_encode)
+
+        # find the number of trailing zeros
+        size_bitarray = encoded.length()
+        number_over_bits = size_bitarray % 8
+        number_trailing_zeros = (8 - number_over_bits) % 8
+        
 
         if path_to_save is not None:
             with open(path_to_save, 'wb') as fh:
