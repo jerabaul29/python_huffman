@@ -27,7 +27,7 @@ pip install pyhuffman
 
 - Generate / load / save to disk Huffman trees.
 - Encode / decode / load / save to disk iterables using a Huffman tree.
-- Iterables can be strings, but also iterables composed of any sort of hashable data (so that it can be used as keys of a dictionary).
+- Iterables can be strings, but also iterables composed of any sort of hashable data (so that it can be used as keys of a dictionary), for example lists, your own objects, pairs of characters, words, etc.
 - Take care of trailing zeros in last byte if the data length is not a multiple of 8 bits.
 
 ## Tests and examples
