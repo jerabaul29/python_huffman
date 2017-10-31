@@ -52,6 +52,12 @@ huffman_tree = pyhuffman.HuffmanTree(freq)
 print(huffman_tree.bitarray_dict)
 ```
 
+Produces:
+
+```
+{'!': bitarray('01001111'), ' ': bitarray('0001'), ',': bitarray('1110010'), 'a': bitarray('1110'), 'c': bitarray('01001'), 'b': bitarray('110000'), 'e': bitarray('100'), 'd': bitarray('11111'), 'g': bitarray('110011'), 'f': bitarray('00100'), 'i': bitarray('1011'), 'h': bitarray('0110'), 'k': bitarray('0010111'), 'j': bitarray('001011011'), 'm': bitarray('00111'), 'l': bitarray('11110'), 'o': bitarray('1101'), 'n': bitarray('1010'), 'q': bitarray('001011001'), 'p': bitarray('110001'), 's': bitarray('0111'), 'r': bitarray('0101'), 'u': bitarray('01000'), 't': bitarray('000'), 'w': bitarray('00110'), 'v': bitarray('001010'), 'y': bitarray('110010'), 'x': bitarray('001011010'), 'z': bitarray('001011000')}
+```
+
 Those trees can then be used to decode / encode data. Reading and writing to binary files is also supported.
 
 ```Python
@@ -87,6 +93,12 @@ huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequen
 decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_file)
 
 print(decoded)
+```
+
+Produces:
+
+```
+this is a short string, but of course the encoding could work as well for any other type and length of data!
 ```
 
 For more detailed examples of how to use the module, look at the tests (**test/test_example_build_tree.py** and **test/test_example_encode_hamlet.py**). In particular, you will find a few helper functions to build the frequency list adapted to any input file in **test/test_example_encode_hamlet.py** .
