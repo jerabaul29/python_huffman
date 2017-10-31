@@ -20,7 +20,9 @@ pip install pyhuffman
 
 ## Releases
 
-- 1.1: correcting trailing zeros bugs
+- 1.3: correct bug due to mutable default argument in tree exploration
+- 1.2: correct bug when creating several objects
+- 1.1: correct trailing zeros bugs
 - 1.0: initial release
 
 ## Features
