@@ -79,11 +79,11 @@ binary_file = 'encoded_huffman.bin'
 data = """this is a short string, but of course the encoding could work as well for any other type and length of data!"""
 
 # build the tree and encode ----
-huffman_tree = pyhuffman.HuffmanTree(frequency_data=freq, path_to_save=path_to_list_frequencies)
+huffman_tree = pyhuffman.HuffmanTree(frequency_data=freq, path_to_tree=path_to_list_frequencies)
 huffman_tree.encode_as_bitarray(data, path_to_save=binary_file)
 
 # build a new tree to decode (just to show how to restaure from saved data) ----
-huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_save=path_to_list_frequencies)
+huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
 decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_file)
 
 print(decoded)
