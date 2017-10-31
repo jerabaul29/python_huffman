@@ -7,15 +7,14 @@ A test case, that can also be used as example, about the use of hashable element
 as symbols.
 """
 
-# path_to_here = os.path.dirname(os.path.realpath(__file__)) + '/'
-path_to_here = ''
+path_to_here = os.path.dirname(os.path.realpath(__file__)) + '/'
 
 
 def test_use_hashable():
     freq = [(0.25, 'aa'), (0.25, '\xFF'), (0.25, 1), (0.25, (1, 2))]
 
-    path_to_list_frequencies = path_to_here + 'data_huffman_tree.pkl'
-    binary_data = path_to_here + 'binary_data_test.bin'
+    path_to_list_frequencies = path_to_here + 'data_huffman_tree_hashable.pkl'
+    binary_data = path_to_here + 'binary_data_test_hashable.bin'
 
     # build the Huffman tree, dictionary and reverse dictionary
     huffman_tree = pyhuffman.HuffmanTree(frequency_data=freq, path_to_tree=path_to_list_frequencies)
@@ -29,5 +28,3 @@ def test_use_hashable():
     decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_data)
 
     assert(decoded == data_test)
-
-test_use_hashable()
