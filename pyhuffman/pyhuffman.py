@@ -51,9 +51,12 @@ def create_tree(frequencies, debug=False):
     return p.get()
 
 
-def walk_tree(node, prefix="", code={}, debug=False):
+def walk_tree(node, prefix="", code=None, debug=False):
     """Walk down the huffman tree under node to capture the code for each symbol
     """
+
+    if code is None:
+        code = {}
 
     if debug:
         print("** call to walk tree with args:")
