@@ -1,6 +1,6 @@
 # pyhuffman
 
-This is a pure Python implementation of Huffman tree, based on the answer provided here (I was not the author of neither the post nor the answer): 
+This is a pure Python implementation of Huffman tree, based on the answer provided here (I was not the author of neither the post nor the answer):
 
 https://stackoverflow.com/questions/11587044/how-can-i-create-a-tree-for-huffman-encoding-and-decoding
 
@@ -23,6 +23,13 @@ pip install pyhuffman
 - 1.1: correcting trailing zeros bugs
 - 1.0: initial release
 
+## Features
+
+- Generate / load / save to disk Huffman trees.
+- Encode / decode / load / save to disk iterables using a Huffman tree.
+- Iterables can be strings, but also iterables composed of any sort of hashable data (so that it can be used as keys of a dictionary).
+- Take care of trailing zeros in last byte if the data length is not a multiple of 8 bits.
+
 ## Tests and examples
 
 Tests can be run from the repository root running:
@@ -30,6 +37,8 @@ Tests can be run from the repository root running:
 ```
 pytest -v .
 ```
+
+Tests can also be used as examples.
 
 The module can be used to generate Huffman trees:
 
@@ -90,7 +99,7 @@ huffman_tree.encode_as_bitarray(data, path_to_save=binary_file)
 
 # build a new tree to decode (just to show how to restaure from saved data) ----
 huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
-decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_file)
+decoded = ''.join(huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_file))
 
 print(decoded)
 ```
@@ -99,6 +108,37 @@ Produces:
 
 ```
 this is a short string, but of course the encoding could work as well for any other type and length of data!
+```
+
+Note that the Huffman encoding can be used on any hashable object (so, tuples or your own objects for example, but not lists):
+
+```python
+from __future__ import print_function
+import pyhuffman.pyhuffman as pyhuffman
+
+freq = [(0.25, 'aa'), (0.25, '\xFF'), (0.25, 1), (0.25, (1, 2))]
+
+path_to_list_frequencies = 'data_huffman_tree.pkl'
+binary_data =  'binary_data_test.bin'
+
+# build the Huffman tree, dictionary and reverse dictionary
+huffman_tree = pyhuffman.HuffmanTree(frequency_data=freq, path_to_tree=path_to_list_frequencies)
+
+# build the tree and encode ----
+data_test = ['aa', 'aa', 1, 1, 1, (1, 2), '\xFF']
+huffman_tree.encode_as_bitarray(data_test, path_to_save=binary_data)
+
+# build a new tree to decode (just to show how to restaure from saved data) ----
+huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
+decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_data)
+
+print(decoded)
+```
+
+Produces:
+
+```
+['aa', 'aa', 1, 1, 1, (1, 2), '\xff']
 ```
 
 For more detailed examples of how to use the module, look at the tests (**test/test_example_build_tree.py** and **test/test_example_encode_hamlet.py**). In particular, you will find a few helper functions to build the frequency list adapted to any input file in **test/test_example_encode_hamlet.py** .

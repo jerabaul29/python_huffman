@@ -226,8 +226,8 @@ class HuffmanTree(object):
             print("number_trailing_zeros: " + str(number_trailing_zeros))
 
         if number_trailing_zeros > 0:
-            dec = bitarray(to_decode[8: -number_trailing_zeros]).decode(self.bitarray_dict)
+            decoded = bitarray(to_decode[8: -number_trailing_zeros]).decode(self.bitarray_dict)
         else:
-            dec = bitarray(to_decode[8:]).decode(self.bitarray_dict)
+            decoded = bitarray(to_decode[8:]).decode(self.bitarray_dict)
 
-        return(''.join(dec))
+        return(decoded)

@@ -2,6 +2,11 @@ from __future__ import print_function
 import pyhuffman.pyhuffman as pyhuffman
 import os
 
+"""
+A test case, that can also be used as example, about how to generate tree, and encode and
+decode some text.
+"""
+
 path_to_here = os.path.dirname(os.path.realpath(__file__)) + '/'
 # path_to_here = ''
 
@@ -72,7 +77,7 @@ def test_good_encoding_decoding():
 
     # build a new tree to decode (just to show how to restaure from saved data) ----
     huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
-    decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file)
+    decoded = ''.join(huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file))
 
     assert len(decoded) == 173940
     assert decoded[0: 10] == 'HAMLET, PR'
@@ -104,6 +109,6 @@ def test_automatic_exhaustive_1():
 
         # build a new tree to decode (just to show how to restaure from saved data) ----
         huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequencies)
-        decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file)
+        decoded = ''.join(huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file))
 
         assert(decoded == reduced_data)

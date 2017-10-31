@@ -2,6 +2,10 @@ from __future__ import print_function
 from bitarray import bitarray
 import pyhuffman.pyhuffman as pyhuffman
 
+"""
+A test case that can also be used as example, about how to build trees.
+"""
+
 
 def test_valid_dicts():
     # example of data: frequencies in the alphabet for typical english text

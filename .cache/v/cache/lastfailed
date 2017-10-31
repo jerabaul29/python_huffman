@@ -1,1 +1,3 @@
-{}
+{
+  "test/test_example_iterable.py::test_use_hashable": true
+}
