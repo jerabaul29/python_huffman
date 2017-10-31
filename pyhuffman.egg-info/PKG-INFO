@@ -1,10 +1,11 @@
 Metadata-Version: 1.0
 Name: pyhuffman
-Version: 1.1
+Version: 1.2
 Summary: A pure-Python Huffman encoder.
 Home-page: https://github.com/jerabaul29/python_huffman
 Author: jerabaul29
 Author-email: jean.rblt@gmail.com
 License: MIT
+Description-Content-Type: UNKNOWN
 Description: UNKNOWN
 Platform: UNKNOWN

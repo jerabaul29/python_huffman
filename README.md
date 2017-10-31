@@ -71,6 +71,7 @@ Those trees can then be used to decode / encode data. Reading and writing to bin
 
 ```Python
 import pyhuffman.pyhuffman as pyhuffman
+import os
 
 freq = [
     (8.167, 'a'), (1.492, 'b'), (2.782, 'c'), (4.253, 'd'),
@@ -102,6 +103,9 @@ huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequen
 decoded = ''.join(huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_file))
 
 print(decoded)
+
+os.remove(path_to_list_frequencies)
+os.remove(binary_file)
 ```
 
 Produces:
@@ -115,11 +119,12 @@ Note that the Huffman encoding can be used on any hashable object (so, tuples or
 ```python
 from __future__ import print_function
 import pyhuffman.pyhuffman as pyhuffman
+import os
 
 freq = [(0.25, 'aa'), (0.25, '\xFF'), (0.25, 1), (0.25, (1, 2))]
 
 path_to_list_frequencies = 'data_huffman_tree.pkl'
-binary_data =  'binary_data_test.bin'
+binary_data = 'binary_data_test.bin'
 
 # build the Huffman tree, dictionary and reverse dictionary
 huffman_tree = pyhuffman.HuffmanTree(frequency_data=freq, path_to_tree=path_to_list_frequencies)
@@ -133,6 +138,9 @@ huffman_tree_restaured = pyhuffman.HuffmanTree(path_to_tree=path_to_list_frequen
 decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_data)
 
 print(decoded)
+
+os.remove(path_to_list_frequencies)
+os.remove(binary_data)
 ```
 
 Produces:

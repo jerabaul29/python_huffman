@@ -83,6 +83,9 @@ def test_good_encoding_decoding():
     assert decoded[0: 10] == 'HAMLET, PR'
     assert decoded[-10:] == 'hot off.]\n'
 
+    os.remove(path_to_list_frequencies)
+    os.remove(binary_hamlet_file)
+
 
 def test_automatic_exhaustive_1():
     # various pathes ----
@@ -112,3 +115,6 @@ def test_automatic_exhaustive_1():
         decoded = ''.join(huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_hamlet_file))
 
         assert(decoded == reduced_data)
+
+        os.remove(path_to_list_frequencies)
+        os.remove(binary_hamlet_file)

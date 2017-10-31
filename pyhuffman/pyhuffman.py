@@ -19,27 +19,50 @@ def generate_reverse_dict(dict_in):
     return dict((v, k) for k, v in dict_in)
 
 
-def create_tree(frequencies):
+def create_tree(frequencies, debug=False):
     """Create the huffman tree from the list [(frequency, symbol)]
     """
     p = Queue.PriorityQueue()
 
+    if debug:
+        print("number of nodes left in the priority queue: " + str(p.qsize()))
+
     # create a leaf node in the priority queue for each symbol
     for value in frequencies:
+        if debug:
+            print("put value: " + str(value))
+
         p.put(value)
 
     # while there are still nodes left in the priority queue, build the huffman tree
     while p.qsize() > 1:
+
+        if debug:
+            print("p.qsize: " + str(p.qsize()))
+
         l, r = p.get(), p.get()
+
+        if debug:
+            print("l, r: " + str(l) + " ; " + str(r))
+
         node = HuffmanNode(l, r)
         p.put((l[0] + r[0], node))
 
     return p.get()
 
 
-def walk_tree(node, prefix="", code={}):
+def walk_tree(node, prefix="", code={}, debug=False):
     """Walk down the huffman tree under node to capture the code for each symbol
     """
+
+    if debug:
+        print("** call to walk tree with args:")
+        print("** node:")
+        print(node)
+        print("**prefix:")
+        print(prefix)
+        print("**code")
+        print(code)
 
     # walk to left
     if isinstance(node[1].left[1], HuffmanNode):
@@ -84,6 +107,27 @@ class HuffmanNode(object):
         self.left = left
         self.right = right
 
+    def __repr__(self):
+        list_strs = []
+
+        if isinstance(self.left, HuffmanNode):
+            list_strs.append('H(')
+            list_strs.append(str(self.left))
+            list_strs.append(')')
+        else:
+            list_strs.append(str(self.left))
+
+        list_strs.append(' | ')
+
+        if isinstance(self.right, HuffmanNode):
+            list_strs.append('H(')
+            list_strs.append(str(self.right))
+            list_strs.append(')')
+        else:
+            list_strs.append(str(self.right))
+
+        return(''.join(list_strs))
+
     def children(self):
         return((self.left, self.right))
 
@@ -110,6 +154,7 @@ class HuffmanTree(object):
         # is enough to perform encryption and decryption.
 
         self.debug = debug
+        self.tree = {}
 
         if frequency_data is not None:
             self.frequency_data = frequency_data
@@ -152,12 +197,20 @@ class HuffmanTree(object):
     def build_tree(self):
         """Build the Huffman tree.
         """
-        self.tree = create_tree(self.frequency_data)
+        self.tree = create_tree(self.frequency_data, self.debug)
+
+        if self.debug:
+            print("tree built:")
+            print(self.tree)
 
     def build_dictionary(self):
         """Build the dictionary symbol to Huffman code.
         """
-        self.huffman_dict = walk_tree(self.tree)
+        self.huffman_dict = walk_tree(self.tree, prefix="", code={}, debug=self.debug)
+
+        if self.debug:
+            print("walked down tree: ")
+            print(self.huffman_dict)
 
     def build_reverse_dictionary(self):
         """Build the dictionary Huffman code to symbol.

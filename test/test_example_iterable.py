@@ -28,3 +28,6 @@ def test_use_hashable():
     decoded = huffman_tree_restaured.decode_from_bitarray(path_to_decode=binary_data)
 
     assert(decoded == data_test)
+
+    os.remove(path_to_list_frequencies)
+    os.remove(binary_data)
